@@ -29,8 +29,8 @@
       <div class="row">
         <div class="col s12">
           <ul class="tabs">
-            <li class="tab col s6"><a class="active" href="#register_tab">Login</a></li>
-            <li class="tab col s6"><a href="#login_tab">Register</a></li>
+            <li class="tab col s6"><a class="active" href="#login_tab">Login</a></li>
+            <li class="tab col s6"><a href="#register_tab">Register</a></li>
           </ul>
         </div>
 
@@ -99,9 +99,28 @@
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="js/materialize.js"></script>
   <script src="js/init.js"></script>
+  <script src="js/jwt-decode.min.js"></script>
   <script>
     $(document).ready(function(){
-
+      $('#submit_register').click(function(e) {
+        e.preventDefault()
+        $.ajax({
+          type: 'POST',
+          url: 'http://localhost:3000/api/users',
+          dataType: 'json',
+          data: {
+            username: $('#register_username').val(),
+            password: $('#register_password').val(),
+          },
+          success: function(data) {
+            if(data.username){
+              console.log(data);
+            } else {
+              Materialize.toast(data, 4000)
+            }
+          }
+        })
+      })
     })
   </script>
 

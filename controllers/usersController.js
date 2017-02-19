@@ -34,19 +34,30 @@ module.exports = {
   },
 
   create: function (req, res) {
-    var users = new usersModel({      username: req.body.username,      password: passwordHash.generate(req.body.password)
-    })
-
-    users.save(function (err, users) {
+    usersModel.findOne({username: req.body.username}, (err, user) => {
       if (err) {
         return res.status(500).json({
-          message: 'Error when creating users',
+          message: 'Error when finding users',
           error: err
         })
       }
-      return res.status(201).json(users)
-    })
-  },
+      if (user) {
+        res.json('Username already exist!')
+      } else {
+        var users = new usersModel({          username: req.body.username,          password: passwordHash.generate(req.body.password)
+        })
+
+        users.save(function (err, users) {
+          if (err) {
+            return res.status(500).json({
+              message: 'Error when creating users',
+              error: err
+            })
+          }
+          return res.status(201).json(users)
+        })
+      }
+    })  },
 
   update: function (req, res) {
     var id = req.params.id
