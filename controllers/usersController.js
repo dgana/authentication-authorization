@@ -104,10 +104,10 @@ module.exports = {
 
   signin: (req, res) => {
     if (!req.body.username) {
-      res.status(400).json('Username Required')
+      res.json('Username Required')
     }
     if (!req.body.password) {
-      res.status(400).json('Password Required')
+      res.json('Password Required')
     }
 
     usersModel.findOne({username: req.body.username}, (err, user) => {
@@ -118,16 +118,20 @@ module.exports = {
         })
       }
       if (!user) {
-        return res.status(404).json({
-          message: 'No such users'
+        return res.status(200).json({
+          message: 'Invalid Username'
         })
       }
 
       if (!passwordHash.verify(req.body.password, user.password)) {
-        res.json('Invalid Password')
+        res.status(200).json({
+          message: 'Wrong Password'
+        })
       } else {
         let myToken = jwt.sign({id: user._id, username: user.username}, 'secret', {expiresIn: '24h'})
-        res.json(myToken)
+        res.json({
+          token: myToken
+        })
       }
     })
   },

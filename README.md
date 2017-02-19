@@ -1,2 +1,8 @@
 # authentication-authorization
-Web API Authentication and Authorization
+
+Web API authentication, authorization & validation!
+
+```
+npm i
+cd authentication-authorization/public -> live-server
+```

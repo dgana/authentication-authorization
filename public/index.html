@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-  <title>Starter Template - Materialize</title>
+  <title>Login Page</title>
 
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -100,6 +100,7 @@
   <script src="js/materialize.js"></script>
   <script src="js/init.js"></script>
   <script src="js/jwt-decode.min.js"></script>
+
   <script>
     $(document).ready(function(){
       $('#submit_register').click(function(e) {
@@ -117,6 +118,27 @@
               console.log(data);
             } else {
               Materialize.toast(data, 4000)
+            }
+          }
+        })
+      })
+
+      $('#submit_login').click(function(e) {
+        e.preventDefault()
+        $.ajax({
+          type: 'POST',
+          url: 'http://localhost:3000/api/users/signin',
+          dataType: 'json',
+          data: {
+            username: $('#login_username').val(),
+            password: $('#login_password').val(),
+          },
+          success: function(data) {
+            if(!data.token){
+              Materialize.toast(data.message, 4000)
+            } else {
+              localStorage.setItem('token', data.token)
+              location.href = 'http://localhost:3000/main.html'
             }
           }
         })
