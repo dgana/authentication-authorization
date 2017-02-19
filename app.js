@@ -8,7 +8,7 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 
 mongoose.connect('mongodb://localhost/authentication_authorization')
-mongoose.Promise = global.promise
+mongoose.Promise = global.Promise
 
 var db = mongoose.connection
 db.on('error', console.error.bind(console, 'connection error:'))

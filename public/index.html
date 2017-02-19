@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Starter Template - Materialize</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+<body>
+  <nav class="light-blue lighten-1" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Login Page</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="#">Home</a></li>
+      </ul>
+
+      <ul id="nav-mobile" class="side-nav">
+        <li><a href="#">Home</a></li>
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="section">
+      <div class="row">
+        <div class="col s12">
+          <ul class="tabs">
+            <li class="tab col s6"><a class="active" href="#register_tab">Login</a></li>
+            <li class="tab col s6"><a href="#login_tab">Register</a></li>
+          </ul>
+        </div>
+
+        <div id="login_tab" class="col s12">
+          <div class="row">
+           <div class="col s12">
+             <div class="card white">
+               <form>
+                 <div class="card-content">
+                    <div class="row">
+                      <div class="input-field col s8">
+                        <input id="login_username" placeholder="Input your username" name="username" type="text" class="validate">
+                        <label for="username">Username</label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="input-field col s8">
+                        <input id="login_password" placeholder="Input your password" type="password" name="password" class="validate">
+                        <label for="password">Password</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-action">
+                    <button id="submit_login" class="waves-effect waves-light btn"><i class="material-icons left">input</i>Login</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="register_tab" class="col s12">
+          <div class="row">
+           <div class="col s12">
+             <div class="card white">
+               <form>
+                 <div class="card-content">
+                    <div class="row">
+                      <div class="input-field col s8">
+                        <input id="register_username" placeholder="This will be your display name" name="username" type="text" class="validate">
+                        <label for="username">Username</label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="input-field col s8">
+                        <input id="register_password" placeholder="Input your password here" type="password" name="password" class="validate">
+                        <label for="password">Password</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-action">
+                    <button id="submit_register" class="waves-effect waves-light btn"><i class="material-icons left">input</i>Register</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="js/materialize.js"></script>
+  <script src="js/init.js"></script>
+  <script>
+    $(document).ready(function(){
+
+    })
+  </script>
+
+  </body>
+</html>

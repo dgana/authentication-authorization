@@ -1,4 +1,6 @@
 var usersModel = require('../models/usersModel.js')
+const passwordHash = require('password-hash')
+const jwt = require('jsonwebtoken')
 
 module.exports = {
   list: function (req, res) {
@@ -32,7 +34,7 @@ module.exports = {
   },
 
   create: function (req, res) {
-    var users = new usersModel({      username: req.body.username,      password: req.body.password
+    var users = new usersModel({      username: req.body.username,      password: passwordHash.generate(req.body.password)
     })
 
     users.save(function (err, users) {
@@ -61,7 +63,8 @@ module.exports = {
         })
       }
 
-      users.username = req.body.username ? req.body.username : users.username;      users.password = req.body.password ? req.body.password : users.password
+      users.username = req.body.username ? req.body.username : users.username;      users.password = passwordHash.generate(req.body.password) ? passwordHash.generate(req.body.password) : passwordHash.verify(req.body.password, users.password)
+
       users.save(function (err, users) {
         if (err) {
           return res.status(500).json({
@@ -84,7 +87,46 @@ module.exports = {
           error: err
         })
       }
-      return res.status(204).json()
+      return res.status(203).json(users)
     })
+  },
+
+  signin: (req, res) => {
+    if (!req.body.username) {
+      res.status(400).json('Username Required')
+    }
+    if (!req.body.password) {
+      res.status(400).json('Password Required')
+    }
+
+    usersModel.findOne({username: req.body.username}, (err, user) => {
+      if (err) {
+        return res.status(500).json({
+          message: 'Error when getting users.',
+          error: err
+        })
+      }
+      if (!user) {
+        return res.status(404).json({
+          message: 'No such users'
+        })
+      }
+
+      if (!passwordHash.verify(req.body.password, user.password)) {
+        res.json('Invalid Password')
+      } else {
+        let myToken = jwt.sign({id: user._id, username: user.username}, 'secret', {expiresIn: '24h'})
+        res.json(myToken)
+      }
+    })
+  },
+
+  verify: (req, res, next) => {
+    let decoded = jwt.verify(req.header('auth'), 'secret')
+    if (decoded) {
+      next()
+    } else {
+      res.json('You have no access!')
+    }
   }
 }
